@@ -15,38 +15,38 @@ module.exports = {
       console.log(error);
     }
   },
-  createUser: (req, res) => {
-    try {
-      User.create({ name: "Adit", age: 24, address: "Pasir Muncang Jaya" })
-        .then(data => res.send(data))
-        .catch(error => res.send(error));
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // createUser: (req, res) => {
+  //   try {
+  //     User.create({ name: req.body.name, email: req.body.email, password: req.body.password })
+  //       .then(data => res.send(data))
+  //       .catch(error => res.send(error));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
 
-  deleteUser: (req, res) => {
-    try {
-      User.remove({
-        name: "ucan"
-      })
-        .then(data => res.send(data))
-        .catch(error => res.send(error));
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // deleteUser: (req, res) => {
+  //   try {
+  //     User.remove({
+  //       name: "ucan"
+  //     })
+  //       .then(data => res.send(data))
+  //       .catch(error => res.send(error));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
 
-  updateUser: (req, res) => {
-    try {
-      User.findOneAndUpdate({ name: "Adit" }, { age: 30 }, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // updateUser: (req, res) => {
+  //   try {
+  //     User.findOneAndUpdate({ name: "Adit" }, { age: 30 }, (err, result) => {
+  //       if (err) throw err;
+  //       res.send(result);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
 
   login: async (req, res) => {
     await User.findOne({ email: req.body.email, password: req.body.password })
