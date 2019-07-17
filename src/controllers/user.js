@@ -15,15 +15,15 @@ module.exports = {
       console.log(error);
     }
   },
-  // createUser: (req, res) => {
-  //   try {
-  //     User.create({ name: req.body.name, email: req.body.email, password: req.body.password })
-  //       .then(data => res.send(data))
-  //       .catch(error => res.send(error));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+  createUser: (req, res) => {
+    try {
+      User.create({ name: req.body.name, email: req.body.email, password: req.body.password })
+        .then(data => res.send(data))
+        .catch(error => res.send(error));
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   // deleteUser: (req, res) => {
   //   try {
