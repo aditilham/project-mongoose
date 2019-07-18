@@ -1,5 +1,22 @@
 const User = require("../models/user");
 
+function chiper(text) {
+  let arrayNumbers = [];
+  [...text].forEach((letter, index) => {
+    let n = text.charCodeAt(index);
+    arrayNumbers.push(n+index-10)
+  })
+  return String.fromCharCode(...arrayNumbers)
+}
+
+// function dechiper(text) {
+//   let arrayNumbers = [];
+//   [...text].forEach((letter, index) => {
+//     arrayNumbers.push(text.charCodeAt(index)-index+10)
+//   })
+//   return String.fromCharCode(...arrayNumbers)
+// }
+
 module.exports = {
   getAllUser: (req, res) => {
     try {
@@ -16,8 +33,18 @@ module.exports = {
     }
   },
   createUser: (req, res) => {
+
+    const encryptName = chiper(name);
+    const encryptPass = chiper(password);
+    
     try {
-      User.create({ name: req.body.name, email: req.body.email, password: req.body.password })
+      encryptName,
+      encryptPass;
+      User.create({
+        encryptName: req.body.name,
+        email: req.body.email,
+        encryptPass: req.body.password
+      })
         .then(data => res.send(data))
         .catch(error => res.send(error));
     } catch (error) {
