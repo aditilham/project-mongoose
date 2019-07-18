@@ -1,21 +1,21 @@
 const User = require("../models/user");
 
-function chiper(text) {
-  let arrayNumbers = [];
-  [...text].forEach((letter, index) => {
-    let n = text.charCodeAt(index);
-    arrayNumbers.push(n+index-10)
-  })
-  return String.fromCharCode(...arrayNumbers)
-}
+// function chiper(text) {
+//   let arrayNumbers = [];
+//   [...text].forEach((letter, index) => {
+//     let n = text.charCodeAt(index);
+//     arrayNumbers.push(n+index-10)
+//   })
+//   return String.fromCharCode(...arrayNumbers)
+// }
 
-function dechiper(text) {
-  let arrayNumbers = [];
-  [...text].forEach((letter, index) => {
-    arrayNumbers.push(text.charCodeAt(index)-index+10)
-  })
-  return String.fromCharCode(...arrayNumbers)
-}
+// function dechiper(text) {
+//   let arrayNumbers = [];
+//   [...text].forEach((letter, index) => {
+//     arrayNumbers.push(text.charCodeAt(index)-index+10)
+//   })
+//   return String.fromCharCode(...arrayNumbers)
+// }
 
 module.exports = {
   getAllUser: (req, res) => {
@@ -33,16 +33,16 @@ module.exports = {
     }
   },
   createUser: (req, res) => {
-    const { email, password } = req.body;
+    // const { email, password } = req.body;
 
-    const encryptEmail = chiper(email);
-    const encryptPass = chiper(password);
+    // const encryptEmail = chiper(email);
+    // const encryptPass = chiper(password);
     
     try {
       User.create({
         name: req.body.name,
-        email: encryptEmail,
-        password: encryptPass
+        email: req.body.email, //encryptEmail
+        password: req.body.password //encryptPass
       })
         .then(data => res.send(data))
         .catch(error => res.send(error));
@@ -76,14 +76,16 @@ module.exports = {
 
   login: async (req, res) => {
 
-    const { email, password } = req.body;
+    // const { email, password } = req.body;
 
-    const decryptEmail = dechiper(email);
-    const decryptPass = dechiper(password);
-
+    // const decryptEmail = dechiper(email);
+    // const decryptPass = dechiper(password);
+    // console.log(`ini email : ${decryptEmail}`);
+    // console.log(decryptPass);
+    
     await User.findOne({
-      email: decryptEmail,
-      password: decryptPass
+      email: req.body.email, //decryptEmail
+      password: req.body.password //decryptPass
     })
       .then(async data => {
         if (data.password !== req.body.password) {
