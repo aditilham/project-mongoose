@@ -9,13 +9,13 @@ function chiper(text) {
   return String.fromCharCode(...arrayNumbers)
 }
 
-// function dechiper(text) {
-//   let arrayNumbers = [];
-//   [...text].forEach((letter, index) => {
-//     arrayNumbers.push(text.charCodeAt(index)-index+10)
-//   })
-//   return String.fromCharCode(...arrayNumbers)
-// }
+function dechiper(text) {
+  let arrayNumbers = [];
+  [...text].forEach((letter, index) => {
+    arrayNumbers.push(text.charCodeAt(index)-index+10)
+  })
+  return String.fromCharCode(...arrayNumbers)
+}
 
 module.exports = {
   getAllUser: (req, res) => {
@@ -33,15 +33,15 @@ module.exports = {
     }
   },
   createUser: (req, res) => {
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
-    const encryptName = chiper(name);
+    const encryptEmail = chiper(email);
     const encryptPass = chiper(password);
     
     try {
       User.create({
-        name: encryptName,
-        email: req.body.email,
+        name: req.body.name,
+        email: encryptEmail,
         password: encryptPass
       })
         .then(data => res.send(data))
@@ -75,7 +75,16 @@ module.exports = {
   // },
 
   login: async (req, res) => {
-    await User.findOne({ email: req.body.email, password: req.body.password })
+
+    const { email, password } = req.body;
+
+    const decryptEmail = dechiper(email);
+    const decryptPass = dechiper(password);
+
+    await User.findOne({
+      email: decryptEmail,
+      password: decryptPass
+    })
       .then(async data => {
         if (data.password !== req.body.password) {
           await res.send({
