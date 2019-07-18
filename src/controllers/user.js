@@ -33,17 +33,16 @@ module.exports = {
     }
   },
   createUser: (req, res) => {
+    const { name, password } = req.body;
 
     const encryptName = chiper(name);
     const encryptPass = chiper(password);
     
     try {
-      encryptName,
-      encryptPass;
       User.create({
-        encryptName: req.body.name,
+        name: encryptName,
         email: req.body.email,
-        encryptPass: req.body.password
+        password: encryptPass
       })
         .then(data => res.send(data))
         .catch(error => res.send(error));
